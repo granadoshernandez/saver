@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
       initialRoute: "/login",
       routes: {
         "/home": (context) => const Home(),
-        "/login": (context) => const Login(),
-        "/signup": (context) => const Signup(),
+        //"/login": (context) => const Login(),
+        //"/signup": (context) => const Signup(),
       },
       //home: const MyHomePage(title: 'PROYECTO SAVER'),
     );

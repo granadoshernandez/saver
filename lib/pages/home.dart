@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'packaprueba2
 import 'package:prueba2/firebase_options.dart';
 import 'package:prueba2/pages/Cruz.dart';
 import 'package:prueba2/pages/Police.dart';
-import 'package:prueba2/pages/acerca.dart';
+import 'package:prueba2/pages/acercade.dart';
 import 'package:prueba2/pages/bomberos.dart';
 import 'package:prueba2/pages/configuraciones.dart';
+//import 'package:prueba2/configuraciones.dart';
 import 'package:prueba2/pages/cruzverde.dart';
 import 'package:prueba2/pages/denuncias.dart';
 import 'package:prueba2/pages/fiscalia.dart';
@@ -138,7 +138,7 @@ class MyHomePage extends StatelessWidget {
               onTap: () {
                  Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ConfiguracionesPage()),
+                  MaterialPageRoute(builder: (context) => ConfiguracionPage()),
                 ); 
               },
             ),
@@ -180,7 +180,7 @@ class MyHomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AcercadePage()),
+                  MaterialPageRoute(builder: (context) => AcercaPage()),
                 ); 
               },
             ),
