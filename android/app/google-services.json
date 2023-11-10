@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "951495042438",
+    "project_id": "prueba2-999b7",
+    "storage_bucket": "prueba2-999b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951495042438:android:a3752b28e3408cb4ebb807",
+        "android_client_info": {
+          "package_name": "com.rnlf.prueba2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWSl-1J0cBJkcWkuoC_BsCDsDsIcb0-jI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
