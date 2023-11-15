@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:prueba2/firebase_options.dart';
-import 'package:prueba2/view/login.dart';
-import 'package:prueba2/view/signup.dart';
 import 'package:prueba2/firebase_options.dart';
 import 'package:prueba2/pages/home.dart';
 
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
         useMaterial3: true,
       ),
-      initialRoute: "/login",
+      initialRoute: "/home",
       routes: {
         "/home": (context) => const Home(),
         //"/login": (context) => const Login(),
