@@ -40,13 +40,26 @@ class MyHomePage extends StatelessWidget {
     // FirebaseAuth.instance.signOut();
     // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
-        backgroundColor: Colors.white, // Color blanco para el AppBar
-        iconTheme: IconThemeData(color: Colors.black), // Color negro para el ícono del Drawer
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        actions: [
+          // Agrega el IconButton para Google Maps aquí
+          IconButton(
+            icon: Icon(Icons.map),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Mapa()),
+              );
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -62,11 +75,11 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.red,
               ),
             ),
-           ListTile(
+            ListTile(
               leading: Image.asset(
-                'images/maps.png',
-                width: 40,
-                height: 40,
+                'assets/maps.png',
+                width: 60,
+                height: 60,
               ),
               title: Text(
                 'Mapa',
@@ -85,10 +98,10 @@ class MyHomePage extends StatelessWidget {
             Divider(), // Divisor
             ListTile(
               leading: Image.asset(
-                'images/denuncias.png',
-                width: 40,
-                height: 40,
-              ), // Icono de perfil
+                'assets/denuncias.png',
+                width: 60,
+                height: 45,
+              ),
               title: Text(
                 'Denuncias',
                 style: TextStyle(
@@ -106,8 +119,8 @@ class MyHomePage extends StatelessWidget {
             Divider(), // Divisor
             ListTile(
               leading: Image.asset(
-                'images/asistencia.png',
-                width: 40,
+                'assets/asistencia.png',
+                width: 60,
                 height: 40,
               ),
               title: Text(
@@ -118,15 +131,15 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Agrega la lógica para navegar a la pantalla de configuración 
+                // Agrega la lógica para navegar a la pantalla de configuración
               },
             ),
             Divider(), // Divisor
             ListTile(
               leading: Image.asset(
-                'images/configuraciones.png',
-                width: 40,
-                height: 40,
+                'assets/configuraciones.png',
+                width: 60,
+                height: 60,
               ),
               title: Text(
                 'Configuraciones',
@@ -136,18 +149,18 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                 Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ConfiguracionPage()),
-                ); 
+                );
               },
             ),
             Divider(), // Divisor
             ListTile(
               leading: Image.asset(
-                'images/perfil.png',
-                width: 40,
-                height: 40,
+                'assets/perfil.png',
+                width: 60,
+                height: 60,
               ),
               title: Text(
                 'Perfil',
@@ -157,21 +170,21 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                 Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PerfilPage()),
-                ); 
+                );
               },
             ),
             Divider(), // Divisor
             ListTile(
               leading: Image.asset(
-                'images/acerca.png',
-                width: 40,
-                height: 40,
+                'assets/acerca.png',
+                width: 60,
+                height: 60,
               ),
               title: Text(
-               'Acerca de',
+                'Acerca de',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -181,25 +194,11 @@ class MyHomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AcercaPage()),
-                ); 
+                );
               },
             ),
-             //Divider(),
-              //ListTile(
-                //leading: Icon(Icons.exit_to_app, color: Colors.red), // Icono de cierre de sesión
-                //title: Text(
-                 // 'Cerrar Sesión',
-                  //style: TextStyle(
-                    //color: Colors.red,
-                  //),
-                //),
-                //onTap: () {
-                  //_signOut(context); // Llama a la función de cierre de sesión
-                //},
-              //),
           ],
         ),
-        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -217,87 +216,43 @@ class MyHomePage extends StatelessWidget {
               'App de Denuncias y Asistencias Ciudadanas',
               style: TextStyle(fontSize: 18, color: Colors.black),
             ),
-
             SizedBox(height: 20),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildIconButton('images/policia.png', 'Policía Nacional Civil', () {
+                _buildIconButton('assets/policia.png', 'Policía Nacional Civil', () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PolicePage()), // Reemplaza 'PoliciaPage()' con la página que desees mostrar
+                    MaterialPageRoute(builder: (context) => PolicePage()),
                   );
                 }),
-                _buildIconButton('images/cruzroja.png', 'Cruz Roja Salvadoreña', () {
+                _buildIconButton('assets/cruz.png', 'Cruz Roja Salvadoreña', () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CruzPage()), // Reemplaza 'CruzRojaPage()' con la página que desees mostrar
+                    MaterialPageRoute(builder: (context) => CruzPage()),
                   );
                 }),
               ],
             ),
-
             SizedBox(height: 12),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildIconButton('images/bomberos.jpg', 'Bomberos de El Salvador', () {
+                _buildIconButton('assets/bomberos.png', 'Bomberos de El Salvador', () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => BomberosPage()), // Reemplaza 'PoliciaPage()' con la página que desees mostrar
+                    MaterialPageRoute(builder: (context) => BomberosPage()),
                   );
                 }),
-                _buildIconButton('images/proteccion.jpg', 'Protección Civil', () {
+                _buildIconButton('assets/proteccion.png', 'Protección Civil', () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProteccionPage()), // Reemplaza 'PoliciaPage()' con la página que desees mostrar
+                    MaterialPageRoute(builder: (context) => ProteccionPage()),
                   );
                 }),
               ],
             ),
-
             SizedBox(height: 12),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _buildIconButton('images/fiscalia.jpg', 'Fiscalía General de El Salvador', () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FiscaliaPage()),
-                  );
-                }),
-                _buildIconButton('images/procuraduria.png', 'Procuraduría General de El Salvador', () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProcuraduriaPage()),
-                  );
-                }),
-              ],
-            ),
-
-            SizedBox(height: 12),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _buildIconButton('images/fuerza.jpg', 'Fuerza Armada Salvadoreña', () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FuerzaPage()), // Reemplaza 'PoliciaPage()' con la página que desees mostrar
-                  );
-                }),
-                _buildIconButton('images/cruzverde.png', 'Cruz Verde Salvadoreña', () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CruzverdePage()), // Reemplaza 'PoliciaPage()' con la página que desees mostrar
-                  );
-                }),
-              ],
-            ),
-
             SizedBox(height: 12),
           ],
         ),
