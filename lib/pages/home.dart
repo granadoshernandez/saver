@@ -8,7 +8,6 @@ import 'package:prueba2/pages/acercade.dart';
 import 'package:prueba2/pages/bomberos.dart';
 import 'package:prueba2/pages/configuraciones.dart';
 //import 'package:prueba2/configuraciones.dart';
-import 'package:prueba2/pages/denuncias.dart';
 import 'package:prueba2/pages/mapa.dart';
 import 'package:prueba2/pages/perfil.dart';
 import 'package:prueba2/pages/proteccion.dart';
@@ -25,11 +24,9 @@ class Home extends StatelessWidget {
     );
   }
 }
+
 class MyHomePage extends StatelessWidget {
-
-void _signOut(BuildContext context) {
-
-  }
+  void _signOut(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +41,7 @@ void _signOut(BuildContext context) {
             icon: Icon(Icons.map),
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MapaPage())
-              );
+                  context, MaterialPageRoute(builder: (context) => MapaPage()));
             },
           ),
         ],
@@ -68,7 +63,7 @@ void _signOut(BuildContext context) {
 
             Divider(), // Divisor
 
-            ListTile(
+            /* ListTile(
               leading: Image.asset(
                 'assets/denuncias.png',
                 width: 60,
@@ -87,7 +82,7 @@ void _signOut(BuildContext context) {
                   MaterialPageRoute(builder: (context) => DenunciasPage()),
                 );
               },
-            ),
+            ), */
 
             Divider(), // Divisor
 
@@ -105,7 +100,7 @@ void _signOut(BuildContext context) {
                 ),
               ),
               onTap: () {
-              Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AsistenciaApp()),
                 );

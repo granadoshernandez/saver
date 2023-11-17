@@ -46,14 +46,10 @@ class MyHomePage extends StatelessWidget {
         title: Text('Denuncia Ciudadana - Policia'),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 16, 168, 238),
-        ),
         child: Column(
           children: [
             EmergencyForm(),
             SizedBox(height: 20),
-            EmergencyList(),
           ],
         ),
       ),
@@ -141,12 +137,12 @@ class _EmergencyFormState extends State<EmergencyForm> {
             ),
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Ubicación',
+                labelText: 'Direcciòn',
                 icon: Icon(Icons.location_on),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Por favor, ingrese la ubicación';
+                  return 'Por favor, ingrese la Direcciòn';
                 }
                 return null;
               },
@@ -190,33 +186,4 @@ void enviarEmergencia(Emergency emergency) {
     'anonima': emergency.anonima,
     'estado': 'Pendiente',
   });
-}
-
-class EmergencyList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('tb_policia').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator();
-          }
-
-          var emergencies = snapshot.data!.docs;
-
-          return ListView.builder(
-            itemCount: emergencies.length,
-            itemBuilder: (context, index) {
-              var emergency = emergencies[index];
-              return ListTile(
-                title: Text(emergency['tipo']),
-                subtitle: Text(emergency['estado']),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
 }

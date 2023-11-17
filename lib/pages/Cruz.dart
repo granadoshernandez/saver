@@ -46,14 +46,10 @@ class MyHomePage extends StatelessWidget {
         title: Text('Denuncia Ciudadana - Cruz Roja'),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 16, 168, 238),
-        ),
         child: Column(
           children: [
             EmergencyForm(),
             SizedBox(height: 20),
-            EmergencyList(),
           ],
         ),
       ),
@@ -190,33 +186,4 @@ void enviarEmergencia(Emergency emergency) {
     'anonima': emergency.anonima,
     'estado': 'Pendiente',
   });
-}
-
-class EmergencyList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('tb_cruz').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator();
-          }
-
-          var emergencies = snapshot.data!.docs;
-
-          return ListView.builder(
-            itemCount: emergencies.length,
-            itemBuilder: (context, index) {
-              var emergency = emergencies[index];
-              return ListTile(
-                title: Text(emergency['tipo']),
-                subtitle: Text(emergency['estado']),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
 }

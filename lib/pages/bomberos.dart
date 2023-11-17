@@ -43,139 +43,14 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-        title: const Text(
-          "Cuerpo de Bomberos",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.orange[600],
-      ),
-      );
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextField(
-                  controller: _incidentTitleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Título del Incidente',
-                    labelStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: _incidentDescriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Descripción del Incidente',
-                    labelStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const Text(
-                      'Prioridad de la denuncia: ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    DropdownButton<String>(
-                      value: _selectedSeverity,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedSeverity = newValue!;
-                        });
-                      },
-                      items: _severities.map((String severity) {
-                        return DropdownMenuItem<String>(
-                          value: severity,
-                          child: Text(
-                            severity,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _selectMedia,
-                  child: const Text(
-                    'Adjuntar Foto o Video',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                if (_incidentMedia.isNotEmpty)
-                  Container(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: _incidentMedia
-                          .map((media) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.file(
-                          media,
-                          width: 150,
-                          height: 150,
-                        ),
-                      ))
-                          .toList(),
-                    ),
-                  ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _submitReport,
-                  child: const Text(
-                    'Enviar Denuncia',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.orange[600],
-                    onPrimary: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
         title: Text('Denuncia Ciudadana - Bomberos'),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 16, 168, 238),
-        ),
         child: Column(
           children: [
             EmergencyForm(),
             SizedBox(height: 20),
-            EmergencyList(),
           ],
-
         ),
       ),
     );
@@ -262,12 +137,12 @@ class _EmergencyFormState extends State<EmergencyForm> {
             ),
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Ubicación',
+                labelText: 'Direcciòn',
                 icon: Icon(Icons.location_on),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Por favor, ingrese la ubicación';
+                  return 'Por favor, ingrese la Direcciòn';
                 }
                 return null;
               },
@@ -311,34 +186,4 @@ void enviarEmergencia(Emergency emergency) {
     'anonima': emergency.anonima,
     'estado': 'Pendiente',
   });
-}
-
-class EmergencyList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection('tb_bomberos').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator();
-          }
-
-          var emergencies = snapshot.data!.docs;
-
-          return ListView.builder(
-            itemCount: emergencies.length,
-            itemBuilder: (context, index) {
-              var emergency = emergencies[index];
-              return ListTile(
-                title: Text(emergency['tipo']),
-                subtitle: Text(emergency['estado']),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
 }
