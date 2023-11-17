@@ -1,74 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class BomberosPage extends StatefulWidget {
-  const BomberosPage({Key? key}) : super(key: key);
-
-  @override
-  State<BomberosPage> createState() => _BomberosPageState();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(BomberosPage());
 }
 
-class _BomberosPageState extends State<BomberosPage> {
-  TextEditingController _incidentTitleController = TextEditingController();
-  TextEditingController _incidentDescriptionController = TextEditingController();
-  List<File> _incidentMedia = [];
-  String _selectedSeverity = 'Baja';
-  List<String> _severities = ['Baja', 'Media', 'Alta'];
-  String locationMessage = 'Presiona el botón de emergencia para solicitar ayuda';
-  bool isEmergency = false;
-
-  Future<void> _selectMedia() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _incidentMedia.add(File(pickedFile.path));
-      });
-    }
+class BomberosPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Denuncia Ciudadana',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: MyHomePage(),
+    );
   }
+}
 
-  void _submitReport() {
-    String title = _incidentTitleController.text;
-    String description = _incidentDescriptionController.text;
-    String severity = _selectedSeverity;
+class Emergency {
+  String tipo;
+  String gravedad;
+  String descripcion;
+  String ubicacion;
+  bool anonima;
 
-    // Solicitar ayuda a los servicios de emergencia
-    _sendEmergencyRequest(title, description, severity, _incidentMedia);
-  }
+  Emergency({
+    required this.tipo,
+    required this.gravedad,
+    required this.descripcion,
+    required this.ubicacion,
+    required this.anonima,
+  });
+}
 
-  void _sendEmergencyRequest(String title, String description, String severity, List<File> media) async {
-    final apiUrl = Uri.parse('https://tuserviciosemergencia.com/api/emergency_request');
-
-    final incidentData = {
-      'title': title,
-      'description': description,
-      'severity': severity,
-    };
-
-    final request = http.MultipartRequest('POST', apiUrl)
-      ..fields.addAll(incidentData);
-
-    for (var file in media) {
-      request.files.add(await http.MultipartFile.fromPath('media', file.path));
-    }
-
-    final response = await http.Response.fromStream(await request.send());
-
-    if (response.statusCode == 200) {
-      print('Solicitud de ayuda de emergencia enviada con éxito.');
-    } else {
-      print('Error al enviar la solicitud de ayuda de emergencia.');
-    }
-  }
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< HEAD
         title: const Text(
           "Cuerpo de Bomberos",
           style: TextStyle(
@@ -186,18 +161,183 @@ class _BomberosPageState extends State<BomberosPage> {
               ],
             ),
           ),
+=======
+        title: Text('Denuncia Ciudadana - Bomberos'),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 16, 168, 238),
+        ),
+        child: Column(
+          children: [
+            EmergencyForm(),
+            SizedBox(height: 20),
+            EmergencyList(),
+          ],
+>>>>>>> 06d61dcc65572407cc1ba026d77608596f8b31be
         ),
       ),
     );
+  }
+}
 
+class EmergencyForm extends StatefulWidget {
+  @override
+  _EmergencyFormState createState() => _EmergencyFormState();
+}
 
+class _EmergencyFormState extends State<EmergencyForm> {
+  final _formKey = GlobalKey<FormState>();
+  late Emergency _emergency;
 
+  @override
+  void initState() {
+    super.initState();
+    _emergency = Emergency(
+        tipo: '', gravedad: '', descripcion: '', ubicacion: '', anonima: false);
+  }
 
+  void _showSuccessNotification() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Emergencia enviada con éxito'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Tipo de emergencia',
+                icon: Icon(Icons.category),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese el tipo de emergencia';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.tipo = value!;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Gravedad',
+                icon: Icon(Icons.warning),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese la gravedad';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.gravedad = value!;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Descripción',
+                icon: Icon(Icons.description),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese la descripción';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.descripcion = value!;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Ubicación',
+                icon: Icon(Icons.location_on),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese la ubicación';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.ubicacion = value!;
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Anónima'),
+              value: _emergency.anonima,
+              onChanged: (value) {
+                setState(() {
+                  _emergency.anonima = value!;
+                });
+              },
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  enviarEmergencia(_emergency);
+                  _showSuccessNotification();
+                  _formKey.currentState!.reset();
+                }
+              },
+              child: Text('Enviar Emergencia'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
+void enviarEmergencia(Emergency emergency) {
+  FirebaseFirestore.instance.collection('tb_bomberos').add({
+    'tipo': emergency.tipo,
+    'gravedad': emergency.gravedad,
+    'descripcion': emergency.descripcion,
+    'ubicacion': emergency.ubicacion,
+    'anonima': emergency.anonima,
+    'estado': 'Pendiente',
+  });
+}
 
+class EmergencyList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: StreamBuilder(
+        stream:
+            FirebaseFirestore.instance.collection('tb_bomberos').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
 
+          var emergencies = snapshot.data!.docs;
 
-
+          return ListView.builder(
+            itemCount: emergencies.length,
+            itemBuilder: (context, index) {
+              var emergency = emergencies[index];
+              return ListTile(
+                title: Text(emergency['tipo']),
+                subtitle: Text(emergency['estado']),
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

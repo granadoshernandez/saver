@@ -13,24 +13,26 @@ import 'package:prueba2/pages/mapa.dart';
 import 'package:prueba2/pages/perfil.dart';
 import 'package:prueba2/pages/proteccion.dart';
 
-
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
-      
     );
   }
 }
 class MyHomePage extends StatelessWidget {
+<<<<<<< HEAD
 
 
 
 
+=======
+  // Función para cerrar sesión
+>>>>>>> 06d61dcc65572407cc1ba026d77608596f8b31be
   void _signOut(BuildContext context) {
 
   }
@@ -204,13 +206,15 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildIconButton('assets/policia.png', 'Policía Nacional Civil', () {
+                _buildIconButton('assets/policia.png', 'Policía Nacional Civil',
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PolicePage()),
                   );
                 }),
-                _buildIconButton('assets/cruz.png', 'Cruz Roja Salvadoreña', () {
+                _buildIconButton('assets/cruz.png', 'Cruz Roja Salvadoreña',
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CruzPage()),
@@ -222,13 +226,15 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildIconButton('assets/bomberos.png', 'Bomberos de El Salvador', () {
+                _buildIconButton(
+                    'assets/bomberos.png', 'Bomberos de El Salvador', () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => BomberosPage()),
                   );
                 }),
-                _buildIconButton('assets/proteccion.png', 'Protección Civil', () {
+                _buildIconButton('assets/proteccion.png', 'Protección Civil',
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ProteccionPage()),
