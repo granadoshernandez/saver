@@ -8,31 +8,25 @@ import 'package:prueba2/pages/acercade.dart';
 import 'package:prueba2/pages/bomberos.dart';
 import 'package:prueba2/pages/configuraciones.dart';
 //import 'package:prueba2/configuraciones.dart';
-import 'package:prueba2/pages/cruzverde.dart';
 import 'package:prueba2/pages/denuncias.dart';
-import 'package:prueba2/pages/fiscalia.dart';
-import 'package:prueba2/pages/fuerza.dart';
 import 'package:prueba2/pages/mapa.dart';
 import 'package:prueba2/pages/perfil.dart';
-import 'package:prueba2/pages/procuraduria.dart';
 import 'package:prueba2/pages/proteccion.dart';
-
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
-      
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-   // Función para cerrar sesión
+  // Función para cerrar sesión
   void _signOut(BuildContext context) {
     // Aquí debes realizar las acciones necesarias para cerrar la sesión, como desautenticar al usuario.
     // Luego, puedes navegar a la pantalla de inicio de sesión o a donde desees.
@@ -220,13 +214,15 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildIconButton('assets/policia.png', 'Policía Nacional Civil', () {
+                _buildIconButton('assets/policia.png', 'Policía Nacional Civil',
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PolicePage()),
                   );
                 }),
-                _buildIconButton('assets/cruz.png', 'Cruz Roja Salvadoreña', () {
+                _buildIconButton('assets/cruz.png', 'Cruz Roja Salvadoreña',
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CruzPage()),
@@ -238,13 +234,15 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildIconButton('assets/bomberos.png', 'Bomberos de El Salvador', () {
+                _buildIconButton(
+                    'assets/bomberos.png', 'Bomberos de El Salvador', () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => BomberosPage()),
                   );
                 }),
-                _buildIconButton('assets/proteccion.png', 'Protección Civil', () {
+                _buildIconButton('assets/proteccion.png', 'Protección Civil',
+                    () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ProteccionPage()),

@@ -1,152 +1,221 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CruzPage extends StatefulWidget {
-  const CruzPage({Key? key}) : super(key: key);
-
-  @override
-  State<CruzPage> createState() => _CruzPageState();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(CruzPage());
 }
 
-class _CruzPageState extends State<CruzPage> {
-  TextEditingController _incidentTitleController = TextEditingController();
-  TextEditingController _incidentDescriptionController = TextEditingController();
-  List<File> _incidentMedia = [];
-  String _selectedSeverity = 'Baja';
-  List<String> _severities = ['Baja', 'Media', 'Alta'];
-
-  Future<void> _selectMedia() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _incidentMedia.add(File(pickedFile.path));
-      });
-    }
+class CruzPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Denuncia Ciudadana',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: MyHomePage(),
+    );
   }
+}
 
-  void _submitReport() {
-    String title = _incidentTitleController.text;
-    String description = _incidentDescriptionController.text;
-    String severity = _selectedSeverity;
-  }
+class Emergency {
+  String tipo;
+  String gravedad;
+  String descripcion;
+  String ubicacion;
+  bool anonima;
 
+  Emergency({
+    required this.tipo,
+    required this.gravedad,
+    required this.descripcion,
+    required this.ubicacion,
+    required this.anonima,
+  });
+}
+
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cruz Roja"),
-        backgroundColor: Colors.red[600], // Cambia el color de fondo de la barra de navegación
+        title: Text('Denuncia Ciudadana - Cruz Roja'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                controller: _incidentTitleController,
-                decoration: InputDecoration(
-                  labelText: 'Título del Incidente',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _incidentDescriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Descripción del Incidente',
-                  labelStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                maxLines: 3,
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text(
-                    'Prioridad de la denuncia: ',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  DropdownButton<String>(
-                    value: _selectedSeverity,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedSeverity = newValue!;
-                      });
-                    },
-                    items: _severities.map((String severity) {
-                      return DropdownMenuItem<String>(
-                        value: severity,
-                        child: Text(
-                          severity,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _selectMedia,
-                child: Text(
-                  'Adjuntar Foto o Video',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              if (_incidentMedia.isNotEmpty)
-                Container(
-                  height: 200,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: _incidentMedia
-                        .map((media) => Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Image.file(
-                        media,
-                        width: 150,
-                        height: 150,
-                      ),
-                    ))
-                        .toList(),
-                  ),
-                ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submitReport,
-                child: Text(
-                  'Enviar Denuncia',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red[600], // Cambia el color del botón
-                  onPrimary: Colors.white, // Cambia el color del texto del botón
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                ),
-              ),
-            ],
-          ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 16, 168, 238),
         ),
+        child: Column(
+          children: [
+            EmergencyForm(),
+            SizedBox(height: 20),
+            EmergencyList(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EmergencyForm extends StatefulWidget {
+  @override
+  _EmergencyFormState createState() => _EmergencyFormState();
+}
+
+class _EmergencyFormState extends State<EmergencyForm> {
+  final _formKey = GlobalKey<FormState>();
+  late Emergency _emergency;
+
+  @override
+  void initState() {
+    super.initState();
+    _emergency = Emergency(
+        tipo: '', gravedad: '', descripcion: '', ubicacion: '', anonima: false);
+  }
+
+  void _showSuccessNotification() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Emergencia enviada con éxito'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Tipo de emergencia',
+                icon: Icon(Icons.category),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese el tipo de emergencia';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.tipo = value!;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Gravedad',
+                icon: Icon(Icons.warning),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese la gravedad';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.gravedad = value!;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Descripción',
+                icon: Icon(Icons.description),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese la descripción';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.descripcion = value!;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Ubicación',
+                icon: Icon(Icons.location_on),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, ingrese la ubicación';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _emergency.ubicacion = value!;
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Anónima'),
+              value: _emergency.anonima,
+              onChanged: (value) {
+                setState(() {
+                  _emergency.anonima = value!;
+                });
+              },
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  enviarEmergencia(_emergency);
+                  _showSuccessNotification();
+                  _formKey.currentState!.reset();
+                }
+              },
+              child: Text('Enviar Emergencia'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void enviarEmergencia(Emergency emergency) {
+  FirebaseFirestore.instance.collection('tb_cruz').add({
+    'tipo': emergency.tipo,
+    'gravedad': emergency.gravedad,
+    'descripcion': emergency.descripcion,
+    'ubicacion': emergency.ubicacion,
+    'anonima': emergency.anonima,
+    'estado': 'Pendiente',
+  });
+}
+
+class EmergencyList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('tb_cruz').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
+
+          var emergencies = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: emergencies.length,
+            itemBuilder: (context, index) {
+              var emergency = emergencies[index];
+              return ListTile(
+                title: Text(emergency['tipo']),
+                subtitle: Text(emergency['estado']),
+              );
+            },
+          );
+        },
       ),
     );
   }
