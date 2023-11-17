@@ -12,6 +12,7 @@ import 'package:prueba2/pages/denuncias.dart';
 import 'package:prueba2/pages/mapa.dart';
 import 'package:prueba2/pages/perfil.dart';
 import 'package:prueba2/pages/proteccion.dart';
+import 'package:prueba2/pages/asistencia.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,15 +26,8 @@ class Home extends StatelessWidget {
   }
 }
 class MyHomePage extends StatelessWidget {
-<<<<<<< HEAD
 
-
-
-
-=======
-  // Función para cerrar sesión
->>>>>>> 06d61dcc65572407cc1ba026d77608596f8b31be
-  void _signOut(BuildContext context) {
+void _signOut(BuildContext context) {
 
   }
 
@@ -111,7 +105,10 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Agrega la lógica para navegar a la pantalla de configuración
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AsistenciaApp()),
+                );
               },
             ),
 

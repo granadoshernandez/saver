@@ -43,7 +43,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
+
         title: const Text(
           "Cuerpo de Bomberos",
           style: TextStyle(
@@ -53,6 +53,7 @@ class MyHomePage extends StatelessWidget {
         ),
         backgroundColor: Colors.orange[600],
       ),
+      );
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -161,7 +162,7 @@ class MyHomePage extends StatelessWidget {
               ],
             ),
           ),
-=======
+
         title: Text('Denuncia Ciudadana - Bomberos'),
       ),
       body: Container(
@@ -174,7 +175,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 20),
             EmergencyList(),
           ],
->>>>>>> 06d61dcc65572407cc1ba026d77608596f8b31be
+
         ),
       ),
     );
