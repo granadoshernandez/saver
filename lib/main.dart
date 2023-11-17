@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:prueba2/firebase_options.dart';
 import 'package:prueba2/firebase_options.dart';
 import 'package:prueba2/pages/home.dart';
 
@@ -19,6 +17,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  void selectImage() {
+
+  }
   const MyApp({super.key});
 
   // This widget is the root of your application.

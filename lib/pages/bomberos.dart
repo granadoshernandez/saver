@@ -69,7 +69,7 @@ class _BomberosPageState extends State<BomberosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Cuerpo de Bomberos",
           style: TextStyle(
             fontSize: 24,
@@ -86,7 +86,7 @@ class _BomberosPageState extends State<BomberosPage> {
               children: [
                 TextField(
                   controller: _incidentTitleController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Título del Incidente',
                     labelStyle: TextStyle(
                       fontSize: 18,
@@ -94,10 +94,10 @@ class _BomberosPageState extends State<BomberosPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextField(
                   controller: _incidentDescriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Descripción del Incidente',
                     labelStyle: TextStyle(
                       fontSize: 18,
@@ -106,10 +106,10 @@ class _BomberosPageState extends State<BomberosPage> {
                   ),
                   maxLines: 3,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Prioridad de la denuncia: ',
                       style: TextStyle(
                         fontSize: 18,
@@ -128,7 +128,7 @@ class _BomberosPageState extends State<BomberosPage> {
                           value: severity,
                           child: Text(
                             severity,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -138,10 +138,10 @@ class _BomberosPageState extends State<BomberosPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _selectMedia,
-                  child: Text(
+                  child: const Text(
                     'Adjuntar Foto o Video',
                     style: TextStyle(
                       fontSize: 18,
@@ -149,7 +149,7 @@ class _BomberosPageState extends State<BomberosPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 if (_incidentMedia.isNotEmpty)
                   Container(
                     height: 200,
@@ -157,7 +157,7 @@ class _BomberosPageState extends State<BomberosPage> {
                       scrollDirection: Axis.horizontal,
                       children: _incidentMedia
                           .map((media) => Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Image.file(
                           media,
                           width: 150,
@@ -167,10 +167,10 @@ class _BomberosPageState extends State<BomberosPage> {
                           .toList(),
                     ),
                   ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _submitReport,
-                  child: Text(
+                  child: const Text(
                     'Enviar Denuncia',
                     style: TextStyle(
                       fontSize: 18,
@@ -180,7 +180,7 @@ class _BomberosPageState extends State<BomberosPage> {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[600],
                     onPrimary: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   ),
                 ),
               ],

@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-void main() => runApp(MyApp());
+class MapaPage extends StatefulWidget {
+  const MapaPage({super.key});
 
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Mapa(),
-    );
-  }
+  State<MapaPage> createState() => _MapaPageState();
 }
 
-class Mapa extends StatelessWidget {
+class _MapaPageState extends State<MapaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,12 +58,12 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           ),
           markers: (myLocation != null)
               ? {
-                  Marker(
-                    markerId: MarkerId("My Location"),
-                    position: myLocation!,
-                    infoWindow: InfoWindow(title: "Mi ubicación"),
-                  ),
-                }
+            Marker(
+              markerId: MarkerId("My Location"),
+              position: myLocation!,
+              infoWindow: InfoWindow(title: "Mi ubicación"),
+            ),
+          }
               : {},
         ),
         if (myLocation != null)
@@ -90,3 +85,4 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
     );
   }
 }
+

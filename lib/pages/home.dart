@@ -8,13 +8,9 @@ import 'package:prueba2/pages/acercade.dart';
 import 'package:prueba2/pages/bomberos.dart';
 import 'package:prueba2/pages/configuraciones.dart';
 //import 'package:prueba2/configuraciones.dart';
-import 'package:prueba2/pages/cruzverde.dart';
 import 'package:prueba2/pages/denuncias.dart';
-import 'package:prueba2/pages/fiscalia.dart';
-import 'package:prueba2/pages/fuerza.dart';
 import 'package:prueba2/pages/mapa.dart';
 import 'package:prueba2/pages/perfil.dart';
-import 'package:prueba2/pages/procuraduria.dart';
 import 'package:prueba2/pages/proteccion.dart';
 
 
@@ -30,15 +26,13 @@ class Home extends StatelessWidget {
     );
   }
 }
-
 class MyHomePage extends StatelessWidget {
-   // Función para cerrar sesión
+
+
+
+
   void _signOut(BuildContext context) {
-    // Aquí debes realizar las acciones necesarias para cerrar la sesión, como desautenticar al usuario.
-    // Luego, puedes navegar a la pantalla de inicio de sesión o a donde desees.
-    // Ejemplo con Firebase:
-    // FirebaseAuth.instance.signOut();
-    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+
   }
 
   @override
@@ -46,7 +40,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         iconTheme: IconThemeData(color: Colors.black),
         actions: [
           // Agrega el IconButton para Google Maps aquí
@@ -55,7 +49,7 @@ class MyHomePage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Mapa()),
+                MaterialPageRoute(builder: (context) => MapaPage())
               );
             },
           ),
@@ -69,33 +63,15 @@ class MyHomePage extends StatelessWidget {
               accountName: Text("Saver App"),
               accountEmail: Text("www.somossaverapp.org.com"),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('images/logo.png'),
+                backgroundImage: AssetImage('assets/logoo.png'),
               ),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.blue,
               ),
             ),
-            ListTile(
-              leading: Image.asset(
-                'assets/maps.png',
-                width: 60,
-                height: 60,
-              ),
-              title: Text(
-                'Mapa',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Mapa()),
-                );
-              },
-            ),
+
             Divider(), // Divisor
+
             ListTile(
               leading: Image.asset(
                 'assets/denuncias.png',
@@ -116,7 +92,9 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
+
             Divider(), // Divisor
+
             ListTile(
               leading: Image.asset(
                 'assets/asistencia.png',
@@ -134,7 +112,9 @@ class MyHomePage extends StatelessWidget {
                 // Agrega la lógica para navegar a la pantalla de configuración
               },
             ),
+
             Divider(), // Divisor
+
             ListTile(
               leading: Image.asset(
                 'assets/configuraciones.png',
@@ -155,7 +135,9 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
+
             Divider(), // Divisor
+
             ListTile(
               leading: Image.asset(
                 'assets/perfil.png',
@@ -176,7 +158,9 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
+
             Divider(), // Divisor
+
             ListTile(
               leading: Image.asset(
                 'assets/acerca.png',
